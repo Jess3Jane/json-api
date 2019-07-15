@@ -1,3 +1,9 @@
+mod document;
+pub use crate::document::Document;
+
+mod error;
+pub use crate::error::{Error, ErrorSource};
+
 mod optional_vec;
 pub use crate::optional_vec::OptionalVec;
 
@@ -12,3 +18,6 @@ pub use crate::links::{Links, Link};
 
 mod relationships;
 pub use crate::relationships::{Relationship, Relationships};
+
+mod jsonapi;
+pub use crate::jsonapi::JsonApi;
