@@ -14,6 +14,16 @@ pub struct Relationship {
     pub meta: Option<Meta>,
 }
 
+impl Default for Relationship {
+    fn default() -> Self {
+        Self {
+            links: None,
+            data: OptionalVec::NotPresent,
+            meta: None,
+        }
+    }
+}
+
 #[cfg(test)]
 mod relationship_test {
     use super::*;

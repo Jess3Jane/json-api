@@ -12,6 +12,16 @@ pub struct Identifier {
     pub meta: Option<Meta>,
 }
 
+impl Identifier {
+    pub fn new(id: String, kind: String) -> Self {
+        Self {
+            id,
+            kind,
+            meta: None,
+        }
+    }
+}
+
 impl From<GenericObject> for Identifier {
     fn from(go: GenericObject) -> Self {
         Self {

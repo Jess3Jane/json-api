@@ -27,6 +27,15 @@ impl Link {
     }
 }
 
+impl Default for Link {
+    fn default() -> Self {
+        Link::Object { 
+            href: None,
+            meta: None,
+        }
+    }
+}
+
 #[cfg(test)]
 mod link_test {
     use super::*;
