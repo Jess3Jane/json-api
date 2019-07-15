@@ -4,17 +4,17 @@ use serde_derive::{Serialize, Deserialize};
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct Document {
     #[serde(skip_serializing_if = "OptionalVec::is_not_present", default)]
-    data: OptionalVec<GenericObject>,
+    pub data: OptionalVec<GenericObject>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    errors: Option<Vec<Error>>,
+    pub errors: Option<Vec<Error>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    meta: Option<Meta>,
+    pub meta: Option<Meta>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    jsonapi: Option<JsonApi>,
+    pub jsonapi: Option<JsonApi>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    links: Option<Links>,
+    pub links: Option<Links>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    included: Option<Vec<GenericObject>>,
+    pub included: Option<Vec<GenericObject>>,
 }
 
 impl Default for Document {

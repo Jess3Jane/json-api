@@ -5,21 +5,21 @@ use serde_derive::{Serialize, Deserialize};
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct Error {
     #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<String>,
+    pub id: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    links: Option<Links>,
+    pub links: Option<Links>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    status: Option<String>,
+    pub status: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    code: Option<String>,
+    pub code: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    title: Option<String>,
+    pub title: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    detail: Option<String>,
+    pub detail: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    source: Option<ErrorSource>,
+    pub source: Option<ErrorSource>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    meta: Option<Meta>,
+    pub meta: Option<Meta>,
 }
 
 impl Default for Error {
@@ -89,9 +89,9 @@ mod error_test {
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct ErrorSource {
     #[serde(skip_serializing_if = "Option::is_none")]
-    pointer: Option<String>,
+    pub pointer: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    parameter: Option<String>,
+    pub parameter: Option<String>,
 }
 
 impl Default for ErrorSource {
