@@ -7,11 +7,11 @@ pub type Relationships = BTreeMap<String, Relationship>;
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Relationship {
     #[serde(skip_serializing_if = "Option::is_none")]
-    links: Option<Links>,
+    pub links: Option<Links>,
     #[serde(skip_serializing_if = "OptionalVec::is_not_present", default)]
-    data: OptionalVec<Identifier>,
+    pub data: OptionalVec<Identifier>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    meta: Option<Meta>,
+    pub meta: Option<Meta>,
 }
 
 #[cfg(test)]
