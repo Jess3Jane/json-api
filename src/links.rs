@@ -33,30 +33,6 @@ impl Link {
             Link::Url(url)
         }
     }
-
-    pub fn new_self(meta: Option<Meta>) -> Self {
-        Self::new("self".into(), meta)
-    }
-
-    pub fn new_related(meta: Option<Meta>) -> Self {
-        Self::new("related".into(), meta)
-    }
-
-    pub fn new_first(meta: Option<Meta>) -> Self {
-        Self::new("first".into(), meta)
-    }
-
-    pub fn new_last(meta: Option<Meta>) -> Self {
-        Self::new("last".into(), meta)
-    }
-
-    pub fn new_prev(meta: Option<Meta>) -> Self {
-        Self::new("prev".into(), meta)
-    }
-
-    pub fn new_next(meta: Option<Meta>) -> Self {
-        Self::new("next".into(), meta)
-    }
 }
 
 impl Default for Link {
