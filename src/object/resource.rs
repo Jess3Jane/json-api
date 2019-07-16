@@ -1,4 +1,4 @@
-use crate::{Meta, Relationships, Links, GenericObject, Identifier};
+use crate::{Meta, Relationships, Relationship, Links, Link, GenericObject, Identifier};
 use serde::{Serialize, de::DeserializeOwned};
 use serde_json::{Error, Value, self};
 use std::convert::{TryFrom, TryInto};
@@ -25,6 +25,26 @@ where A: Attributes + Serialize + DeserializeOwned {
             relationships: None,
             links: None,
             meta: None,
+        }
+    }
+
+    pub fn add_relationship(&mut self, name: String, relationship: Relationship) {
+        if let Some(r) = &mut self.relationships {
+            r.insert(name, relationship);
+        } else {
+            let mut r = Relationships::new();
+            r.insert(name, relationship);
+            self.relationships = Some(r);
+        }
+    }
+
+    pub fn add_link(&mut self, name: String, link: Link) {
+        if let Some(l) = &mut self.links {
+            l.insert(name, link);
+        } else {
+            let mut l = Links::new();
+            l.insert(name, link);
+            self.links = Some(l);
         }
     }
 }
