@@ -20,10 +20,10 @@ impl<A> ResourceObject<A>
 where A: Attributes + Serialize + DeserializeOwned {
     pub fn new(id: String) -> Self {
         Self {
+            links: A::links(&id),
             id,
             attributes: None,
             relationships: None,
-            links: None,
             meta: None,
         }
     }
@@ -55,6 +55,10 @@ pub trait Attributes {
     ///
     /// This is assumed not to change between calls.
     fn kind() -> String;
+
+    fn links(id: &str) -> Option<Links> {
+        None
+    }
 }
 
 impl<A> TryFrom<GenericObject> for ResourceObject<A>
