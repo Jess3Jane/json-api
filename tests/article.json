@@ -1,0 +1,71 @@
+{
+  "data": {
+    "type": "articles",
+    "id": "1",
+    "attributes": {
+      "title": "JSON:API is kind of strange in rust"
+    },
+    "links": {
+      "self": "/articles/1"
+    },
+    "relationships": {
+      "author": {
+        "links": {
+          "self": "/articles/1/relationships/author",
+          "related": "/articles/1/author"
+        },
+        "data": { "type": "people", "id": "9" }
+      },
+      "comments": {
+        "links": {
+          "self": "/articles/1/relationships/comments",
+          "related": "/articles/1/comments"
+        },
+        "data": [
+          { "type": "comments", "id": "5" },
+          { "type": "comments", "id": "12" }
+        ]
+      }
+    }
+  },
+  "included": [{
+    "type": "comments",
+    "id": "5",
+    "attributes": {
+      "body": "First!"
+    },
+    "relationships": {
+      "author": {
+        "data": { "type": "people", "id": "2" }
+      }
+    },
+    "links": {
+      "self": "/comments/5"
+    }
+  }, {
+    "type": "comments",
+    "id": "12",
+    "attributes": {
+      "body": "I like XML better"
+    },
+    "relationships": {
+      "author": {
+        "data": { "type": "people", "id": "9" }
+      }
+    },
+    "links": {
+      "self": "/comments/12"
+    }
+  } , {
+    "type": "people",
+    "id": "9",
+    "attributes": {
+      "first-name": "kitty",
+      "last-name": "cat",
+      "contact": "kitty@cat.space"
+    },
+    "links": {
+      "self": "/people/9"
+    }
+  }]
+}
