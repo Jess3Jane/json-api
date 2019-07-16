@@ -18,11 +18,11 @@ pub struct ResourceObject<A: Attributes + Serialize + DeserializeOwned> {
 
 impl<A> ResourceObject<A> 
 where A: Attributes + Serialize + DeserializeOwned {
-    pub fn new(id: String) -> Self {
+    pub fn new(id: String, attributes: Option<A>) -> Self {
         Self {
             links: A::links(&id),
             id,
-            attributes: None,
+            attributes,
             relationships: None,
             meta: None,
         }

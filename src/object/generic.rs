@@ -124,7 +124,7 @@ mod test {
             fn kind() -> String { "b".into() }
         }
 
-        let mut ro = ResourceObject::<Attr>::new("a".into());
+        let mut ro = ResourceObject::<Attr>::new("a".into(), None);
         let go = (&ro).into();
         assert_eq!(GenericObject {
             id: "a".into(),
