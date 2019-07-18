@@ -3,11 +3,21 @@ use serde::{Serialize, de::DeserializeOwned};
 use serde_derive::{Serialize, Deserialize};
 use super::ObjectConversionError;
 
+/// A resource identifier object
+///
+/// Basically just the identifying information needed to refer to a `ResourceObject`
+///
+/// See the [JSON:API docs](https://jsonapi.org/format/#document-resource-identifier-objects)
+/// for more information
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Identifier {
+    /// The identifier of the object which, along with the object's type, MUST refer to a single
+    /// unique resource
     pub id: String,
+    /// The object's type, renamed here to kind due to keyword limitations
     #[serde(rename = "type")]
     pub kind: String,
+    /// Non-standard meta information
     #[serde(skip_serializing_if = "Option::is_none")]
     pub meta: Option<Meta>,
 }

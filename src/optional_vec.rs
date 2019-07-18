@@ -2,6 +2,23 @@ use serde_derive::{Serialize, Deserialize};
 use serde::de::{DeserializeOwned, Deserializer, Deserialize, Error};
 use serde_json::{Value, self};
 
+/// A rather complicated relative of `Option<Vec>`
+///
+/// There are a couple places in JSON:API where you have keys with values that can either:
+/// - Not Exist
+/// - Be `null`
+/// - Contain a single object
+/// - Contain an array of objects
+///
+/// This enum exists for those cases
+///
+/// `OptionalVec::NotPresent` exists to specify that the key should not (or did not)
+/// exist
+///
+/// `OptionalVec::One` is `None` when the value is `null` and `Some` when there is a 
+/// single object
+///
+/// `OptionalVec::Many` will be used when the value is an array, empty or not
 #[derive(Serialize, PartialEq, Eq, Debug, Clone)]
 #[serde(untagged)]
 pub enum OptionalVec<T> {
@@ -11,6 +28,9 @@ pub enum OptionalVec<T> {
 }
 
 impl<T> OptionalVec<T> {
+    /// Checks for the `OptionalVec::NotPresent` variant
+    ///
+    /// Mostly provided to allow serialization to be skipped
     pub fn is_not_present(&self) -> bool {
         match self {
             OptionalVec::NotPresent => true,
@@ -18,6 +38,7 @@ impl<T> OptionalVec<T> {
         }
     }
 
+    /// Checks for the `OptionalVec::One` variant
     pub fn is_one(&self) -> bool {
         match self {
             OptionalVec::One(_) => true,
@@ -25,6 +46,7 @@ impl<T> OptionalVec<T> {
         }
     }
 
+    /// Checks for the `OptionalVec::Many` variant
     pub fn is_many(&self) -> bool {
         match self {
             OptionalVec::Many(_) => true,
@@ -53,6 +75,7 @@ where T: DeserializeOwned {
     }
 }
 
+/// Defaults to `OptionalVec::NotPresent`
 impl<T> Default for OptionalVec<T> {
     fn default() -> Self {
         OptionalVec::NotPresent

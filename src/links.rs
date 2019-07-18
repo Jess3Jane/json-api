@@ -3,8 +3,18 @@ use serde_derive::{Serialize, Deserialize};
 use serde_json::Value;
 use std::collections::BTreeMap;
 
+/// A collection of links
+///
+/// See the [JSON:API docs](https://jsonapi.org/format/#document-links) for more information
 pub type Links = BTreeMap<String, Link>;
 
+/// A link object
+/// 
+/// Enum represents every valid configuration but in practice you should probably either use
+/// `Links::Url` for links with just a URL or `Links::Object` if you need to include a meta
+/// object
+///
+/// See the [JSON:API docs](https://jsonapi.org/format/#document-links) for more information
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 #[serde(untagged)]
 pub enum Link {
@@ -18,6 +28,7 @@ pub enum Link {
 }
 
 impl Link {
+    /// Grabs the url of the link regardless of its variant
     pub fn href<'a>(&'a self) -> Option<&'a str> {
         match &self {
             Link::Url(href) => Some(href),
@@ -26,6 +37,7 @@ impl Link {
         }
     }
 
+    /// If meta is `None` will construct `Link::Url` instead of `Link::Object`
     pub fn new(url: String, meta: Option<Meta>) -> Self {
         if let Some(m) = meta {
             Link::Object{ href: Some(url), meta: Some(m) }
@@ -35,6 +47,7 @@ impl Link {
     }
 }
 
+/// Defaults to `Link::Object` with all fields `None`
 impl Default for Link {
     fn default() -> Self {
         Link::Object { 

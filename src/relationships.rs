@@ -2,14 +2,25 @@ use serde_derive::{Serialize, Deserialize};
 use crate::{Links, Identifier, OptionalVec, Meta};
 use std::collections::BTreeMap;
 
+/// A set of object relationships
+///
+/// See the [JSON:API docs](https://jsonapi.org/format/#document-resource-object-relationships)
+/// for more information
 pub type Relationships = BTreeMap<String, Relationship>;
 
+/// A relationship object
+///
+/// See the [JSON:API docs](https://jsonapi.org/format/#document-resource-object-relationships)
+/// for more information
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Relationship {
+    /// MUST contain at least a `self` link or a `related` link
     #[serde(skip_serializing_if = "Option::is_none")]
     pub links: Option<Links>,
+    /// The objects this relationship links to
     #[serde(skip_serializing_if = "OptionalVec::is_not_present", default)]
     pub data: OptionalVec<Identifier>,
+    /// Non-standard meta information
     #[serde(skip_serializing_if = "Option::is_none")]
     pub meta: Option<Meta>,
 }

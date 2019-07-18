@@ -4,6 +4,13 @@ use serde_derive::{Serialize, Deserialize};
 use serde_json::{self, Value};
 use std::collections::BTreeMap;
 
+/// A generic resource object of some unknown type
+///
+/// Should never be directly manipulated, convert to/from `ResourceObject` or 
+/// `Identifier` instead
+///
+/// See the [JSON:API docs](https://jsonapi.org/format/#document-resource-objects)
+/// for more information
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct GenericObject {
     pub (crate) id: String,
@@ -19,6 +26,13 @@ pub struct GenericObject {
     pub (crate) links: Option<Links>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub (crate) meta: Option<Meta>,
+}
+
+impl GenericObject {
+    /// Returns the type of the object (renamed here to `kind` due to keyword restrictuons)
+    pub fn kind<'a>(&'a self) -> &'a str {
+        &self.kind
+    }
 }
 
 impl<A> From<ResourceObject<A>> for GenericObject

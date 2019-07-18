@@ -1,6 +1,9 @@
 use serde_json::Value;
 use std::collections::BTreeMap;
 
+/// An object containing non-standard meta information
+///
+/// See the [JSON:API docs](https://jsonapi.org/format/#document-meta) for more information
 pub type Meta = BTreeMap<String, Value>;
 
 #[cfg(test)]

@@ -1,23 +1,34 @@
 use crate::{Links, Meta};
 use serde_derive::{Serialize, Deserialize};
 
-
+/// Additional information about any errors encountered while processing a request 
+///
+/// See the [JSON:API docs](https://jsonapi.org/format/#errors) for more information
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct Error {
+    /// A unique identifier for this particular occurrence of the problem
     #[serde(skip_serializing_if = "Option::is_none")]
     pub id: Option<String>,
+    /// Should contain an `about` link that leads to further details about this
+    /// particular occurrence of the problem
     #[serde(skip_serializing_if = "Option::is_none")]
     pub links: Option<Links>,
+    /// The HTTP status code applicable to this problem
     #[serde(skip_serializing_if = "Option::is_none")]
     pub status: Option<String>,
+    /// An application-specific error code
     #[serde(skip_serializing_if = "Option::is_none")]
     pub code: Option<String>,
+    /// A short human-readable summary of the problem that SHOULD NOT change between occurrences
     #[serde(skip_serializing_if = "Option::is_none")]
     pub title: Option<String>,
+    /// A human-readable explaination specific to this occurence of the problem
     #[serde(skip_serializing_if = "Option::is_none")]
     pub detail: Option<String>,
+    /// Information about the source of the Error
     #[serde(skip_serializing_if = "Option::is_none")]
     pub source: Option<ErrorSource>,
+    /// Non-standard meta information
     #[serde(skip_serializing_if = "Option::is_none")]
     pub meta: Option<Meta>,
 }
@@ -37,6 +48,7 @@ impl Default for Error {
     }
 }
 
+/// Will fill the `detail` field with the `Display` of the error
 impl<E> From<E> for Error 
 where E : std::error::Error {
     fn from(err: E) -> Self {
@@ -86,10 +98,16 @@ mod error_test {
     }
 }
 
+/// Information about the source of the error
+///
+/// See the [JSON:API docs](https://jsonapi.org/format/#errors) for more information
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct ErrorSource {
+    /// A JSON pointer ([RFC 6901](https://tools.ietf.org/html/rfc6901)) to the associated
+    /// entity in the request document
     #[serde(skip_serializing_if = "Option::is_none")]
     pub pointer: Option<String>,
+    /// Which URI parameter caused the error
     #[serde(skip_serializing_if = "Option::is_none")]
     pub parameter: Option<String>,
 }

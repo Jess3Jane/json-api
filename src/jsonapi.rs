@@ -1,12 +1,17 @@
 use crate::Meta;
 use serde_derive::{Serialize, Deserialize};
 
+/// Information about the implementation of JSON:API used by the server
+///
+/// For more information see the [JSON:API docs](https://jsonapi.org/format/#document-jsonapi-object)
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct JsonApi {
+    /// The highest JSON:API version supported
     #[serde(skip_serializing_if = "Option::is_none")]
-    version: Option<String>,
+    pub version: Option<String>,
+    /// Non-standard meta information
     #[serde(skip_serializing_if = "Option::is_none")]
-    meta: Option<Meta>,
+    pub meta: Option<Meta>,
 }
 
 impl Default for JsonApi {

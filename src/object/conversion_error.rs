@@ -8,6 +8,13 @@ use std::{
     fmt::{Display, Formatter, Error as FormatError},
 };
 
+/// The error produced when something has gone wrong converting into `ResourceObject`'s
+///
+/// `ObjectConversionError::FailedDeserialization` is produced when the `attributes` field
+/// fails to deserialize
+///
+/// `ObjectConversionError::ImproperType` is produced when the type of the object does not
+/// match the output of the attribute object's `kind` function
 #[derive(Debug)]
 pub enum ObjectConversionError {
     FailedDeserialization(SerdeError),

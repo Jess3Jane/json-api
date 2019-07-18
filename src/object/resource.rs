@@ -4,15 +4,24 @@ use serde_json::{Error, Value, self};
 use std::convert::{TryFrom, TryInto};
 use super::ObjectConversionError;
 
+/// A resource object
+///
+/// Much like the object in the 
+/// [JSON:API docs](https://jsonapi.org/format/#document-resource-objects) with the
+/// notable difference that the type of the object is encoded into the strictly typed
+/// `Attributes` genric
 #[derive(PartialEq, Debug, Clone)]
-/// Much like a GenericObject but with two key differences:
-/// * Has stricty typed attributes instead of `Value`
-/// * Does not have a `kind` attributes, that's handled by the attribute
 pub struct ResourceObject<A: Attributes + Serialize + DeserializeOwned> {
+    /// The object identifier which together with `A::kind` must identify
+    /// a unique resource
     pub id: String,
+    /// Attributes representing some of the resource's data
     pub attributes: Option<A>,
+    /// Describes relationships between this resource and others
     pub relationships: Option<Relationships>,
+    /// Contains links relating to the resource
     pub links: Option<Links>,
+    /// Contains non-standard meta information
     pub meta: Option<Meta>,
 }
 
@@ -28,6 +37,8 @@ where A: Attributes + Serialize + DeserializeOwned {
         }
     }
 
+    /// Inserts an entry into the relationship map, creating the map if it does not
+    /// exist
     pub fn add_relationship(&mut self, name: String, relationship: Relationship) {
         if let Some(r) = &mut self.relationships {
             r.insert(name, relationship);
@@ -38,6 +49,7 @@ where A: Attributes + Serialize + DeserializeOwned {
         }
     }
 
+    /// Inserts an entry into the link map, creating the map if it does not exist
     pub fn add_link(&mut self, name: String, link: Link) {
         if let Some(l) = &mut self.links {
             l.insert(name, link);
@@ -49,13 +61,15 @@ where A: Attributes + Serialize + DeserializeOwned {
     }
 }
 
-/// Strongly type attributes of a `ResourceObject`
+/// Strictly type attributes of a `ResourceObject`
 pub trait Attributes {
     /// The `type` field of the resulting JSON:API `ResourceObject`
     ///
-    /// This is assumed not to change between calls.
+    /// This SHOULD NOT change between calls
     fn kind() -> String;
 
+    /// Called by `ResourceObject::new` with the intended id of the object
+    /// to allow default links to be provided
     fn links(id: &str) -> Option<Links> {
         None
     }
