@@ -8,7 +8,7 @@ mod optional_vec;
 pub use crate::optional_vec::OptionalVec;
 
 mod object;
-pub use crate::object::{GenericObject, ResourceObject, Identifier, Attributes};
+pub use crate::object::{GenericObject, ResourceObject, Identifier, Attributes, ObjectConversionError};
 
 mod meta;
 pub use crate::meta::Meta;
